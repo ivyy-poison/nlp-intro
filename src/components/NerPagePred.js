@@ -3,6 +3,8 @@ import parse from "html-react-parser"
 
 export default function NerPagePred(props) {
 
+
+    
     const predictions = props.translatedText.map((translation) => {
         return (
             <div className="Something">

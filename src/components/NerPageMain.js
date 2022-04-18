@@ -19,7 +19,10 @@ export default function NerPageMain(){
 
     const baseURL = "http://151c-35-231-119-93.ngrok.io"           // since now using temporary ngrok link, must change each time fastapi server is created
 
-    React.useEffect(() => {
+    console.log("hello")
+    console.log(formData)
+
+    React.useEffect((formData) => {
         // axios.get(`${baseURL}/ner/models`).then((response) => {
         //     var modelList = response.data.message
         //     setDisplayOptions(modelList.map((model) => {
@@ -61,7 +64,7 @@ export default function NerPageMain(){
                     return {
                         ...prevFormData,
                         [event.target.id]: event.target.checked, 
-                        modelType: [...prevFormData.modelType].filter(e => e != event.target.id)
+                        modelType: [...prevFormData.modelType].filter(e => e !== event.target.id)
                     }
                 })
             }
