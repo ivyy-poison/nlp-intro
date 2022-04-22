@@ -15,12 +15,11 @@ export default function NerPageMain(){
 
     const [formData, setFormData] = React.useState({text: "", modelType: [], html: true})
     const [translatedText, setTranslatedText] = React.useState([])
+    const [predictionCalled, setPredictionCalled] = React.useState(false)
     const [displayOptions, setDisplayOptions] = React.useState([])
+    
 
     const baseURL = "http://7d09-34-125-218-182.ngrok.io"           // since now using temporary ngrok link, must change each time fastapi server is created
-
-    // console.log("hello")
-    // console.log(formData)
 
     React.useEffect((formData) => {
         // axios.get(`${baseURL}/ner/models`).then((response) => {
@@ -87,7 +86,7 @@ export default function NerPageMain(){
         for (let i = 0; i < formData.modelType.length; i++) {
             endPoints.push(`${baseURL}/ner/zh/test/${formData.modelType[i]}`)
         }
-        console.log("he")
+        
         Promise.all(endPoints.map(function (endpoint) {
             axios.post(endpoint, {
                 text_to_translate: formData.text,
@@ -99,6 +98,8 @@ export default function NerPageMain(){
                 })
             })
         }))
+        setPredictionCalled(true)
+
     }
 
     return(
@@ -109,7 +110,7 @@ export default function NerPageMain(){
                 handleChange={handleChange} 
                 handleSubmit={handleSubmit} 
             />
-            <NerPagePred translatedText={translatedText} />
+            {predictionCalled && <NerPagePred translatedText={translatedText} />}
         </main>
     )
 }

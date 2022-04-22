@@ -4,7 +4,7 @@ body {
 }
 
 .shadow {
-    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .text-gray {
@@ -101,33 +101,28 @@ section {
 }
 
 
-.ner-input-text {
+.input-text {
     width: 100%;
     height: 20vh;
     resize: vertical;
     font-family: inter, sans-serif;
     font-size: 16px;
-    border: 1px solid #444;
+    /* border: 2px solid gray; */
     border-radius: 12px;
     text-indent: 15px;
     padding: 15px 0;
     margin-bottom: 10px;
 
     background-color: #f2f2f2;
-    -webkit-transition: all .5s ease-out;
-	-moz-transition: all .5s ease-out;
-	-ms-transition: all .5s ease-out;
-	-o-transition: all .5s ease-out;
-	transition: all .5s ease-out;
-    /* transition: 1s ease; */
+	transition: all .3s ease;
 }
 
-.ner-input-text:focus {
-    background-color: lightblue;
-    /* background-color: #fff; */
+.input-text:focus {
+
+    background-color: #fff;
     box-shadow: 0 0 0 5px hsla(220, 100%, 50%, 30%);
-    outline: 2px solid blue;
-    
+    outline: 2px solid lightblue;
+   
 }
 
 .submit-button {
@@ -137,12 +132,13 @@ section {
     margin-left: auto;
     border-radius: 12px;
     background-color: white; 
-    color: black; 
+    color: #4CAF50; 
+    font-weight:bold;
     border: 2px solid #4CAF50;
     cursor: pointer;
-    width: 7%;
+    width: 100px;
     height: 6vh;
-    transition-duration: 0.5s;
+    transition-duration: 0.3s;
 }
 
 .submit-button:hover {
@@ -155,11 +151,10 @@ section {
 .group  { 
     margin: 0; 
     margin-bottom: 1.25em; 
-    padding: 1.25em 0; 
+    padding: 0.75em; 
     width: 50%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 100px;
+
+    max-height: 120px;
     border-radius: 10px;
   } 
   
@@ -170,7 +165,16 @@ section {
     color: black; 
 } 
 
-.ner-checkboxes-list {
+
+.checkboxes {
+    padding: 0.25em;
+    /* background-color: lightblue; */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 100px;
+}
+
+.checkboxes-list {
     margin: 0; 
     padding: 0; 
     margin-left: 20px;
@@ -179,21 +183,19 @@ section {
 
 
 
-.ner-checkboxes-list li { 
-    border: 1px transparent solid; 
+.checkboxes-list li { 
     display: inline-block;
+} 
+
+.checkbox-option {
+    margin: 0px 5px;
+    display:flex;
     align-items: center;
     height: 3em;
     width:12em;
-} 
+}
 
-/* .ner-checkboxes-list li:hover { 
-    background-color: lightyellow; 
-    border: 1px gray solid; 
-    width: 12em; 
-}  */
-
-.options label {
+.checkbox-option label {
     margin-left: 8px;
 }
 
@@ -203,13 +205,12 @@ section {
     padding: 20px 30px;
     width: 40%;
     max-height: 250px;
-    border: 2px solid gray;
+    border: 2px solid black;
     border-radius: 12px;
 }
 
 .ner-prediction h2 {
-    /* color: blue; */
-    /* padding-bottom: 5px; */
+
     margin-bottom: 5px !important;
 }
 

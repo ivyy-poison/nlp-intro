@@ -6,7 +6,7 @@ export default function ModelOption(props) {
 
     return (
         <li>
-            <div className="options">
+            <div className="checkbox-option">
                 <input 
                     type="checkbox" 
                     // checked={isChecked}

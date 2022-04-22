@@ -6,11 +6,11 @@ export default function NerPageForm(props) {
             <div className="ner-form">
 
                 {/* <div className="ner-form-right"> */}
-                <div className="ner-model-list">
+                <div className="model-list">
                     <fieldset className="group"> 
                         <legend>Select available NER Models here</legend> 
-                        <div className="ner-checkboxes">
-                            <ul className="ner-checkboxes-list"> 
+                        <div className="checkboxes">
+                            <ul className="checkboxes-list"> 
                                 {props.optionList}
                             </ul>
                         </div>
@@ -25,9 +25,9 @@ export default function NerPageForm(props) {
                         onChange={props.handleChange}
                         name="text"
                         value={props.formData.text}
-                        className="ner-input-text"
+                        className="input-text"
                     />
-                    <button className="submit-button">submit</button>
+                    <button className="submit-button shadow">submit</button>
                 </div>
                 
                 
