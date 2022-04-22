@@ -5,11 +5,18 @@ function Navbar() {
     return (
         <nav className="navbar shadow">
             {/* <img className="nav-logo" src="https://www.w3schools.com/images/lamp.jpg"></img> */}
-            <h1 className="nav-title">NLP Project</h1>
-            <ul className="nav-items">
+            {/* <a href="/" className="nav-title">NLP Project</a>
+            <ul className="nav-items-list">
                 
-                <Link to="/ner"><li className="nav-items-options">NER</li></Link>
-                <Link to="/"><li className="nav-items-options">Rel Extraction</li></Link> 
+                <li className="nav-items"><a href="/ner" className="nav-links">NER</a></li>
+                <li className="nav-items"><a href="/rel" className="nav-links">Rel Extraction</a></li>
+            
+            </ul> */}
+            <Link to="/" className="nav-title"><h2>NLP Project</h2></Link>
+            <ul className="nav-items-list">
+                
+                <Link to="/ner" className="nav-links"><li className="nav-items">NER</li></Link>
+                <Link to="/rel" className="nav-links"><li className="nav-items">Rel Extraction</li></Link>
             
             </ul>
         </nav>

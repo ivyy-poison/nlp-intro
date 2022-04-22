@@ -8,6 +8,7 @@ import {
 
 import Home from "./pages/Home"
 import NerPage from "./pages/NerPage"
+import RelPage from "./pages/RelPage"
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
             <Routes>
                 <Route path="/ner" element={<NerPage/>} />
                 <Route path="/" element={<Home/>}/>
+                <Route path="/rel" element={<RelPage/>}/>
             </Routes>
         </Router>
     )
