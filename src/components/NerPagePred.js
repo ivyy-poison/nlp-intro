@@ -1,20 +1,23 @@
 import React from "react"
-import parse from "html-react-parser"
+
+import NerPrediction from "./NerPrediction"
 
 export default function NerPagePred(props) {
-
-    var predictions = props.translatedText.map((translation) => {
+    var predictions = props.predictions.map((prediction) => {
         return (
-            <div className="ner-prediction">
-                {parse(translation)}
-            </div>
+            <NerPrediction prediction={prediction} key={prediction.model_id} />
         )
     })
 
     return (
-        <div className="entity-prediction">
+        <div>
             <h1>Prediction goes below here</h1>
-            {predictions}
+            
+            <div className="entity-predictions">
+                {predictions}
+            </div>
+            
         </div>
+        
     )
 }

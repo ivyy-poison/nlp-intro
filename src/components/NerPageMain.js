@@ -5,47 +5,27 @@ import NerPagePred from "./NerPagePred"
 import ModelOption from "./ModelOption"
 
 
-const modelList = [{modelName: "mBERT", lang: "zh"}, {modelName: "BERT-Chinese", lang: "zh"}, {modelName: "XLM-R", lang: "id"}]
+// const modelList = [{modelName: "mBERT", lang: "zh"}, {modelName: "BERT-Chinese", lang: "zh"}, {modelName: "XLM-R", lang: "id"}]
 // This will be replaced by a useEffect()
 
 
 export default function NerPageMain(){
 
-    // 我的名字是陈宇豪，我居住在新加坡， 我爱麦当劳。
-
+    const [modelOptions, setModelOptions] = React.useState([])
     const [formData, setFormData] = React.useState({text: "", modelType: [], html: true})
-    const [translatedText, setTranslatedText] = React.useState([])
-    const [predictionCalled, setPredictionCalled] = React.useState(false)
-    const [displayOptions, setDisplayOptions] = React.useState([])
     
+    const [predictionCalled, setPredictionCalled] = React.useState(false)
+    const [predictions, setPredictions] = React.useState([])
+    
+    
+    // const baseURL = "http://7d09-34-125-218-182.ngrok.io"           // since now using temporary ngrok link, must change each time fastapi server is created
+    const baseURL = "http://127.0.0.1:8000"
 
-    const baseURL = "http://7d09-34-125-218-182.ngrok.io"           // since now using temporary ngrok link, must change each time fastapi server is created
 
-    React.useEffect((formData) => {
-        // axios.get(`${baseURL}/ner/models`).then((response) => {
-        //     var modelList = response.data.message
-        //     setDisplayOptions(modelList.map((model) => {
-        //         return <ModelOption 
-        //                     key={`${model.modelName}-${model.lang}`} 
-        //                     id = {`${model.modelName}-${model.lang}`}
-        //                     model={model.modelName} 
-        //                     lang={model.lang}
-        //                     handleChange = {handleChange}
-        //                     formData = {formData}
-        //                     />
-        //     }))
-        // })
-        setDisplayOptions(modelList.map((model) => {
-            return <ModelOption 
-                        key={`${model.modelName}-${model.lang}`} 
-                        id = {`${model.modelName}-${model.lang}`}
-                        model={model.modelName} 
-                        lang={model.lang}
-                        handleChange = {handleChange}
-                        formData = {formData}
-                        />
-        }))
-
+    React.useEffect(() => {
+        axios.get(`${baseURL}/ner/models`).then((response) => {
+            setModelOptions(response.data.message)
+        })
     }, []) 
 
     function handleChange(event) {
@@ -80,24 +60,21 @@ export default function NerPageMain(){
 
     function handleSubmit(event){
         event.preventDefault()   // this is to prevent everything to be embedded on the URL itself.   
-        console.log("button pressed")    
+        console.log("button pressed")  
+        setPredictions([])  
 
-        var endPoints = []
-        for (let i = 0; i < formData.modelType.length; i++) {
-            endPoints.push(`${baseURL}/ner/zh/test/${formData.modelType[i]}`)
-        }
-        
-        Promise.all(endPoints.map(function (endpoint) {
-            axios.post(endpoint, {
+        Promise.all(formData.modelType.map(function(model) {
+            axios.post(`${baseURL}/ner/zh/test/${model}`, {
                 text_to_translate: formData.text,
-                model_type: "temp",
+                model_type: model,
                 html: formData.html
             }).then((response) => {
-                setTranslatedText((prevTranslatedText) => {
-                    return [...prevTranslatedText, response.data.message]
+                setPredictions((prevPredictions) => {
+                    return [...prevPredictions, response.data.message]
                 })
             })
         }))
+        
         setPredictionCalled(true)
 
     }
@@ -105,12 +82,13 @@ export default function NerPageMain(){
     return(
         <main className="main-content">
             <NerPageForm 
-                optionList={displayOptions} 
+                // optionList={modelOptions}
+                modelList = {modelOptions} 
                 formData={formData} 
                 handleChange={handleChange} 
                 handleSubmit={handleSubmit} 
             />
-            {predictionCalled && <NerPagePred translatedText={translatedText} />}
+            {predictionCalled && <NerPagePred predictions={predictions} />}
         </main>
     )
 }

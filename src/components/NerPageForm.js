@@ -1,24 +1,53 @@
 import React from "react"
+import ModelOption from "./ModelOption"
 
 export default function NerPageForm(props) {
+
+    var modelOptions = props.modelList.map((model) => {
+            return <ModelOption 
+                        key={`${model.id}`} 
+                        id={`${model.id}`}
+                        model={model.name} 
+                        lang={model.language}
+                        handleChange = {props.handleChange}
+                        formData = {props.formData}
+                        />
+        })
+
+    // const [modelOptions, setModelOptions] = React.useState()
+
+
+    // React.useEffect(() => {
+    //     console.log(1)
+    //     setModelOptions(props.modelList.map((model) => {
+    //         return <ModelOption 
+    //                     key={`${model.id}`} 
+    //                     id={`${model.id}`}
+    //                     model={model.name} 
+    //                     lang={model.language}
+    //                     handleChange = {props.handleChange}
+    //                     formData = {props.formData}
+    //                     />
+    //     })) 
+    // }, [])
+
+    
+
     return (
         <form onSubmit={props.handleSubmit}>
             <div className="ner-form">
-
-                {/* <div className="ner-form-right"> */}
                 <div className="model-list">
                     <fieldset className="group"> 
                         <legend>Select available NER Models here</legend> 
                         <div className="checkboxes">
                             <ul className="checkboxes-list"> 
-                                {props.optionList}
+                                {modelOptions}
                             </ul>
                         </div>
                          
                     </fieldset> 
                 </div>
 
-                {/* <div className="ner-form-left"> */}
                 <div className="ner-input">
                     <textarea  
                         placeholder="enter your text here"
@@ -29,10 +58,6 @@ export default function NerPageForm(props) {
                     />
                     <button className="submit-button shadow">submit</button>
                 </div>
-                
-                
-                
-
             </div>
         </form>
     )
