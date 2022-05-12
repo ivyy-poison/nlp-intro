@@ -13,26 +13,7 @@ export default function NerPageForm(props) {
                         formData = {props.formData}
                         />
         })
-
-    // const [modelOptions, setModelOptions] = React.useState()
-
-
-    // React.useEffect(() => {
-    //     console.log(1)
-    //     setModelOptions(props.modelList.map((model) => {
-    //         return <ModelOption 
-    //                     key={`${model.id}`} 
-    //                     id={`${model.id}`}
-    //                     model={model.name} 
-    //                     lang={model.language}
-    //                     handleChange = {props.handleChange}
-    //                     formData = {props.formData}
-    //                     />
-    //     })) 
-    // }, [])
-
-    
-
+   
     return (
         <form onSubmit={props.handleSubmit}>
             <div className="ner-form">

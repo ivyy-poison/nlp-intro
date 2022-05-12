@@ -4,6 +4,7 @@ function MainHomePage() {
     return (
         <main className="main-content">
             <h2 className="main-title">Exploration of NLP in various languages</h2>
+            
             <div className="main-bodytext">
                 <p>
                     Over the course of the past few months, I have explored

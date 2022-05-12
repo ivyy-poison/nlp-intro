@@ -16,12 +16,15 @@ export default function NerPrediction(props){
         rating: null
     })
     const [isDisabled, setIsDisabled] = React.useState(false)
+    const [rating, setRating] = React.useState()
+    const [showRating, setShowRating] = React.useState(false)
+    const [message, setMessage] = React.useState("")
 
     function handleClick(event){
-        console.log("clicked")
+        // console.log("clicked")
         console.log(`button pressed: ${event.target.id}`)
         setIsDisabled(true)
-
+        
         setFormData(prevFormData => {
             return {
                 ...prevFormData,
@@ -29,7 +32,16 @@ export default function NerPrediction(props){
             }
         })
 
-        setIsDisabled(true)
+        console.log(event.target.value)
+        if (event.target.value === "true"){
+            console.log("TRUE")
+            setMessage("You liked the model prediction") 
+        } else if (event.target.value === "false"){
+            console.log("FALSE")
+            setMessage("You did not like the model prediction")
+        } else {
+            console.log(event.target.value === "true")
+        }
 
         axios.post(`${baseURL}/ner/models/${event.target.id}/ratings`, {
             translated_text: formData.text,
@@ -40,11 +52,23 @@ export default function NerPrediction(props){
         })
     }
 
+    // if (formData.rating == true){
+    //     console.log(formData.rating)
+    //     setMessage("You liked the model prediction") 
+    // } else if (formData.rating == false){
+    //     console.log(formData.rating)
+    //     setMessage("You did not like the model prediction")
+    // }
+    
+
     return (
         <div className="ner-prediction-box">
             {parse(prediction.html)}
             <div className="rating">
-                <div>
+                <div className="show-rating">
+                    <p>{message}</p>
+                </div>
+                <div className="rate-buttons">
                     <button disabled={isDisabled} onClick={handleClick} id={prediction.model_id} value={true}>like</button>
                     <button disabled={isDisabled} onClick={handleClick} id={prediction.model_id} value={false} >hate</button>
                 </div>

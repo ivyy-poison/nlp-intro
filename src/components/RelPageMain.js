@@ -12,7 +12,7 @@ export default function RelPageMain() {
     const [predictions, setPredictions] = React.useState([])
     
     
-    const baseURL = "http://127.0.0.1:8000"
+    const baseURL = process.env.REACT_APP_BASE_URL
 
 
     React.useEffect(() => {

@@ -252,11 +252,14 @@ section {
     margin-top: 10px;
     display:flex;
     /* background-color: lightblue; */
-    margin-left:auto;
+    /* margin-left:auto; */
+    justify-content: space-between;
+    align-items: center;
 }
-.rating div {
-    margin-left:auto;
-}
+
+
+
+
 
 .table-container {
     max-height: 200px;

@@ -6,6 +6,7 @@ export default function ModelOption(props) {
             <div className="checkbox-option">
                 <input 
                     type="checkbox" 
+                    checked={props.formData[props.id]}
                     onChange={props.handleChange}
                     id={props.id} 
                     value={props.id} 

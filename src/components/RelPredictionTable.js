@@ -24,11 +24,6 @@ export default function RelPredictionTable(props) {
                 </thead>
                 <tbody>
                     {relations}
-                {/* <tr>
-                    <td>aidawouidhiu adhwahdawd</td>
-                    <td>aidawouidh iuadhwahdawd</td>
-                    <td>aidawouidhi uadhwahdawd</td>
-                </tr> */}
                 </tbody>
             </table>
         </div>
