@@ -3,9 +3,16 @@ import React from "react"
 import NerPrediction from "./NerPrediction"
 
 export default function NerPagePred(props) {
-    var predictions = props.predictions.map((prediction) => {
+    
+    var predictions = props.responses.map((prediction) => {
         return (
-            <NerPrediction prediction={prediction} key={prediction.model_id} />
+            <NerPrediction 
+                text={props.text} 
+                html={prediction[0]} 
+                model_name={prediction[1]}
+                key={prediction[2]} 
+                id={prediction[2]} 
+            />
         )
     })
 

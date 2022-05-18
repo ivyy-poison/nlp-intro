@@ -3,15 +3,14 @@ import RelPrediction from "./RelPrediction"
 
 export default function RelPagePred(props){
 
-    
-
-    var predictions = props.predictions.map((prediction) => {
+    var predictions = props.responses.map((response) => {
         return (
             <RelPrediction 
-                predictions={prediction.result}
-                model={prediction.model_id}
-                text={prediction.text} 
-                key={prediction.model_id} 
+                text={props.text} 
+                predictions={response[0]} 
+                model_name={response[1]}
+                key={response[2]} 
+                id={response[2]} 
             />
         )
     })

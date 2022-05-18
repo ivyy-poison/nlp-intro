@@ -2,27 +2,19 @@ import React from "react"
 import axios from "axios"
 import NerPageForm from "./NerPageForm"
 import NerPagePred from "./NerPagePred"
-import ModelOption from "./ModelOption"
-
-
-// const modelList = [{modelName: "mBERT", lang: "zh"}, {modelName: "BERT-Chinese", lang: "zh"}, {modelName: "XLM-R", lang: "id"}]
-// This will be replaced by a useEffect()
-
 
 export default function NerPageMain(){
 
     const [modelOptions, setModelOptions] = React.useState([])
-    const [formData, setFormData] = React.useState({text: "", modelType: [], html: true})
+    const [formData, setFormData] = React.useState({text: "", modelType: []})
     
     const [predictionCalled, setPredictionCalled] = React.useState(false)
-    const [predictions, setPredictions] = React.useState([])
-    
-    
-    // const baseURL = "http://7d09-34-125-218-182.ngrok.io"           // since now using temporary ngrok link, must change each time fastapi server is created
+    const [predictions, setPredictions] = React.useState({})
+
     const baseURL = process.env.REACT_APP_BASE_URL
 
     React.useEffect(() => {
-        axios.get(`${baseURL}/ner/models`).then((response) => {
+        axios.get(`${baseURL}/models/ner`).then((response) => {
             setModelOptions(response.data)
             for (let i = 0; i < response.data.length; i ++) {
                 setFormData(prevFormData => {
@@ -34,7 +26,6 @@ export default function NerPageMain(){
             }
         })
     }, []) 
-    console.log(formData)
 
     function handleChange(event) {
         if (event.target.type === "checkbox") {
@@ -65,23 +56,26 @@ export default function NerPageMain(){
             })
         }
     }       
+    console.log(formData.modelType)
 
     function handleSubmit(event){
         event.preventDefault()   // this is to prevent everything to be embedded on the URL itself.   
         console.log("button pressed")  
-        setPredictions([])  
+        setPredictions({text: "", responses: []})  
 
         Promise.all(formData.modelType.map(function(model) {
-            axios.post(`${baseURL}/ner/zh/test/${model}`, {
-                text_to_translate: formData.text,
-                model_type: model,
-                html: formData.html
+            axios.post(`${baseURL}/models/ner/${model}/prediction`, {
+                text: formData.text,
+                html: true
             }).then((response) => {
                 setPredictions((prevPredictions) => {
-                    return [...prevPredictions, response.data.message]
+                    return {
+                        text: response.data.text, 
+                        responses: [...prevPredictions.responses, [response.data.html, response.data.model_name, response.data.model_id]]}
+                    })
                 })
             })
-        }))
+        )
         
         setPredictionCalled(true)
 
@@ -95,7 +89,7 @@ export default function NerPageMain(){
                 handleChange={handleChange} 
                 handleSubmit={handleSubmit} 
             />
-            {predictionCalled && <NerPagePred predictions={predictions} />}
+            {predictionCalled && <NerPagePred responses={predictions.responses} text={predictions.text}/>}
         </main>
     )
 }

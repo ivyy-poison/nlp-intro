@@ -9,15 +9,22 @@ export default function RelPageMain() {
     const [formData, setFormData] = React.useState({text: "", modelType: [], html: true})
     
     const [predictionCalled, setPredictionCalled] = React.useState(false)
-    const [predictions, setPredictions] = React.useState([])
-    
+    const [predictions, setPredictions] = React.useState({})
     
     const baseURL = process.env.REACT_APP_BASE_URL
 
 
     React.useEffect(() => {
-        axios.get(`${baseURL}/re/models`).then((response) => {
-            setModelOptions(response.data.message)
+        axios.get(`${baseURL}/models/rel`).then((response) => {
+            setModelOptions(response.data)
+            for (let i = 0; i < response.data.length; i ++) {
+                setFormData(prevFormData => {
+                    return {
+                        ...prevFormData,
+                        [response.data[i].id]: false
+                    }
+                })
+            }
         })
     }, []) 
 
@@ -49,27 +56,29 @@ export default function RelPageMain() {
                 }
             })
         }
-    }       
+    }              
+
+    console.log(formData.modelType)
 
     function handleSubmit(event){
         event.preventDefault()   // this is to prevent everything to be embedded on the URL itself.   
         console.log("button pressed")  
-        setPredictions([])  
+        setPredictions({text: "", responses: []})  
 
         Promise.all(formData.modelType.map(function(model) {
-            axios.post(`${baseURL}/rel/en/test/${model}`, {
-                text_to_translate: formData.text,
-                model_type: model,
-                html: formData.html
+            axios.post(`${baseURL}/models/rel/${model}/prediction`, {
+                text: formData.text,
+                html: true
             }).then((response) => {
                 setPredictions((prevPredictions) => {
-                    return [...prevPredictions, response.data.message]
+                    return {
+                        text: response.data.text, 
+                        responses: [...prevPredictions.responses, [response.data.prediction, response.data.model_name, response.data.model_id]]}
+                    })
                 })
             })
-        }))
-        
+        )
         setPredictionCalled(true)
-
     }
 
     return(
@@ -80,7 +89,7 @@ export default function RelPageMain() {
                 handleChange={handleChange} 
                 handleSubmit={handleSubmit} 
             />
-            {predictionCalled && <RelPagePred predictions={predictions} />}
+            {predictionCalled && <RelPagePred responses={predictions.responses} text={predictions.text} />}
         </main>
     )
 }
