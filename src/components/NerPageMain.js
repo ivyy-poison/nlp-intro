@@ -82,7 +82,7 @@ export default function NerPageMain(){
     }
 
     return(
-        <main className="main-content">
+        <main className="p-10">
             <NerPageForm 
                 modelList = {modelOptions} 
                 formData={formData} 

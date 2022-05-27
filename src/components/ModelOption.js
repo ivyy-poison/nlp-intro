@@ -2,8 +2,8 @@ import React from "react"
 
 export default function ModelOption(props) {
     return (
-        <li>
-            <div className="checkbox-option">
+        <li className="inline-block w-max md:w-5/12 py-3 px-5">
+            <div className="flex items-center">
                 <input 
                     type="checkbox" 
                     checked={props.formData[props.id]}
@@ -11,7 +11,7 @@ export default function ModelOption(props) {
                     id={props.id} 
                     value={props.id} 
                 />
-                <label htmlFor={props.id}>{props.model} ({props.lang})</label>
+                <label className="px-2" htmlFor={props.id}>{props.model} ({props.lang})</label>
             </div>   
         </li> 
     )
